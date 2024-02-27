@@ -1,0 +1,15 @@
+{
+    "name": "My Project",
+    "context": "..",
+    "dockerFile": "Dockerfile",
+    "settings": { 
+        // 这里可以定义VS Code设置
+    },
+    "extensions": [
+        // 这里可以列出需要的VS Code扩展
+    ],
+    "forwardPorts": [
+        // 这里可以定义需要转发的端口
+    ]
+    // 其他配置...
+}

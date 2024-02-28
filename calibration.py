@@ -13,7 +13,7 @@ def calibrate_camera(square_size, width, height, image_folder):
 
     # 读取图像文件
 
-    images = glob.glob(f'{image_folder}/*.bmp')
+    images = glob.glob(f'{image_folder}/*.png')
 
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
@@ -31,10 +31,10 @@ def calibrate_camera(square_size, width, height, image_folder):
             imgpoints.append(corners2)
 
             # 可以选择绘制并显示角点
-            # cv2.drawChessboardCorners(img, (width,height), corners2, ret)
-            # cv2.namedWindow('img', cv2.WINDOW_NORMAL)
-            # cv2.imshow('img', img)
-            # cv2.waitKey(100)
+            cv2.drawChessboardCorners(img, (width,height), corners2, ret)
+            cv2.namedWindow('img', cv2.WINDOW_NORMAL)
+            cv2.imshow('img', img)
+            cv2.waitKey(200)
 
     cv2.destroyAllWindows()
 
@@ -59,7 +59,7 @@ def main():
     # 棋盘格的大小为 (width, height)。
     square_size = 2.0
     width, height = 11, 8
-    image_folder = 'dataset14/right'
+    image_folder = 'dataset/right'
     calibration_data = calibrate_camera(square_size, width, height, image_folder)
 
 

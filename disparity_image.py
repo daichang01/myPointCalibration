@@ -23,7 +23,7 @@ def adjust_disparity_parameters(window_name, img_left, img_right):
     """
     cv2.namedWindow(window_name,cv2.WINDOW_NORMAL)
     cv2.createTrackbar('num', window_name, 2, 10, lambda x: None)
-    cv2.createTrackbar('blockSize', window_name, 5, 255, lambda x: None)
+    cv2.createTrackbar('blockSize', window_name, 5, 25, lambda x: None)
 
     app = 0
     while True:
@@ -54,8 +54,8 @@ def adjust_disparity_parameters(window_name, img_left, img_right):
 
 def main():
     # 加载校正后的左右图像
-    img_left = cv2.imread('rl.bmp', 0)  # 假设'rl.bmp'是左图
-    img_right = cv2.imread('rr.bmp', 0)  # 假设'rr.bmp'是右图
+    img_left = cv2.imread('rectified_left.png', 0)  
+    img_right = cv2.imread('rectified_right.png', 0)  
 
     # 调整视差参数并计算视差图
     adjust_disparity_parameters('SGBM', img_left, img_right)

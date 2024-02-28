@@ -37,9 +37,9 @@ def main():
     left_calibration_path = 'calibration_data_left.npz'
     right_calibration_path = 'calibration_data_right.npz'
     stereo_calibration_path = 'stereocali.npz'
-    left_img_path = "dataset14/left/Image_7.bmp"
-    right_img_path = "dataset14/right/Image_7.bmp"
-    image_size = (2448, 2048)
+    left_img_path = "testleft.png"
+    right_img_path = "testright.png"
+    image_size = (1242, 2208)
     
     # 加载校准数据
     mtx_left, dist_left, mtx_right, dist_right, R, T = load_calibration_data(
@@ -57,18 +57,21 @@ def main():
     rectified_left, rectified_right = rectify_images(left_img_path, right_img_path, map1x, map1y, map2x, map2y)
     
     # 保存和显示校正后的图像
-    cv2.imwrite("rl.bmp", rectified_left)
-    cv2.imwrite("rr.bmp", rectified_right)
+    cv2.imwrite("rectified_left.png", rectified_left)
+    cv2.imwrite("rectified_right.png", rectified_right)
 
     concat = cv2.hconcat([rectified_left, rectified_right])
 
     i = 0
-    while (i < 2048):
+    while (i < 1242):
         cv2.line(concat, (0,i), (4894,i), (0, 255, 0))
-        i += 100
-    cv2.imwrite('rectified.bmp',concat)
+        i += 50
+    cv2.imwrite('rectified.png',concat)
+    cv2.imshow("rectified", concat)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
-    print(Q)
+    print("Q:",Q)
 
 if __name__ == "__main__":
     main()

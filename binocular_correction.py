@@ -1,5 +1,6 @@
 import numpy as np
 import cv2
+from utils import split_stereo_image
 
 def load_calibration_data(left_calibration_path, right_calibration_path, stereo_calibration_path):
     # 加载单目校准数据
@@ -37,6 +38,7 @@ def main():
     left_calibration_path = 'calibration_data_left.npz'
     right_calibration_path = 'calibration_data_right.npz'
     stereo_calibration_path = 'stereocali.npz'
+    split_stereo_image("testminxing.png")
     left_img_path = "testleft.png"
     right_img_path = "testright.png"
     image_size = (1242, 2208)

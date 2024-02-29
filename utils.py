@@ -44,6 +44,14 @@ def split_stereo_iamges(source_folder, dest_folder_left, dest_folder_right):
             cv2.imwrite(left_img_path, left_img)
             cv2.imwrite(right_img_path, right_img)
     
+def split_stereo_image(img_path):
+    img = cv2.imread(img_path)
+    height, width = img.shape[:2]
+    split_width = width // 2
+    left_img = img[:,:split_width]
+    right_img = img[:,split_width:]
+    cv2.imwrite("testleft.png",left_img)
+    cv2.imwrite("testright.png",right_img)
 
 
 
@@ -51,10 +59,4 @@ def split_stereo_iamges(source_folder, dest_folder_left, dest_folder_right):
 if __name__ == "__main__":
     # rename_files_in_folder("dataset14/right")
     # split_stereo_iamges("dataset/ori","dataset/left", "dataset/right")
-    img = cv2.imread("testyichen.png")
-    height, width = img.shape[:2]
-    split_width = width // 2
-    left_img = img[:,:split_width]
-    right_img = img[:,split_width:]
-    cv2.imwrite("testleft.png",left_img)
-    cv2.imwrite("testright.png",right_img)
+    pass

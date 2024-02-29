@@ -12,7 +12,7 @@ def rename_files_in_folder(folder_path):
             if number_part.isdigit():
                 number = int(number_part)
                 if number % 2 == 0:
-                    new_number = number - 1
+                    new_number = number + 1
                     new_filename = f"Image_{new_number}.bmp"
                     old_file_path = os.path.join(folder_path, filename)
                     new_file_path = os.path.join(folder_path, new_filename)
@@ -44,13 +44,7 @@ def split_stereo_iamges(source_folder, dest_folder_left, dest_folder_right):
             cv2.imwrite(left_img_path, left_img)
             cv2.imwrite(right_img_path, right_img)
     
-
-
-
-
-if __name__ == "__main__":
-    # rename_files_in_folder("dataset14/right")
-    # split_stereo_iamges("dataset/ori","dataset/left", "dataset/right")
+def split_stereo_image():
     img = cv2.imread("testyichen.png")
     height, width = img.shape[:2]
     split_width = width // 2
@@ -58,3 +52,9 @@ if __name__ == "__main__":
     right_img = img[:,split_width:]
     cv2.imwrite("testleft.png",left_img)
     cv2.imwrite("testright.png",right_img)
+
+
+
+if __name__ == "__main__":
+    rename_files_in_folder("Hkvs_dataset/left")
+    # split_stereo_iamges("dataset/ori","dataset/left", "dataset/right")

@@ -50,8 +50,8 @@ def calculate_camera_distance(T):
 def main():
     square_size = 2.0 # 棋盘格方格的实际大小
     pattern_size = (11, 8) # 棋盘格模式大小
-    images_left = glob.glob('dataset/left/*.png') # 左侧图像路径
-    images_right = glob.glob('dataset/right/*.png') # 右侧图像路径
+    images_left = glob.glob('Hkvs_dataset/left/*.bmp') # 左侧图像路径
+    images_right = glob.glob('Hkvs_dataset/right/*.bmp') # 右侧图像路径
     mtx_left, dist_left, mtx_right, dist_right = load_calibration_data('calibration_data_left.npz', 'calibration_data_right.npz')
     
     # 获取图像大小

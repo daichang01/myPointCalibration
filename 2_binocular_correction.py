@@ -33,12 +33,32 @@ def rectify_images(left_img_path, right_img_path, map1x, map1y, map2x, map2y):
     
     return rectified_left, rectified_right
 
+def find_and_draw_matches(img_left, img_right):
+    # 初始化ORB检测器
+    orb = cv2.ORB_create()
+    
+    # 分别在左右图像上检测特征点并计算描述符
+    keypoints_left, descriptors_left = orb.detectAndCompute(img_left, None)
+    keypoints_right, descriptors_right = orb.detectAndCompute(img_right, None)
+    
+    # 使用BFMatcher进行匹配
+    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+    matches = bf.match(descriptors_left, descriptors_right)
+    
+    # 根据匹配距离排序
+    matches = sorted(matches, key=lambda x:x.distance)
+    
+    # 绘制前N个匹配
+    img_matches = cv2.drawMatches(img_left, keypoints_left, img_right, keypoints_right, matches[:500], None, flags=2)
+    
+    return img_matches
+
 def main():
     left_calibration_path = 'calibration_data_left.npz'
     right_calibration_path = 'calibration_data_right.npz'
     stereo_calibration_path = 'stereocali.npz'
-    left_img_path = "testleft.bmp"
-    right_img_path = "testright.bmp"
+    left_img_path = "testpic/testleft.png"
+    right_img_path = "testpic/testright.png"
     image_size = (2048, 2448)
     
     # 加载校准数据
@@ -51,24 +71,32 @@ def main():
     # 初始化畸变校正映射
     map1x, map1y = init_undistort_rectify_map(mtx_left, dist_left, R1, P1, image_size)
     map2x, map2y = init_undistort_rectify_map(mtx_right, dist_right, R2, P2, image_size)
+    #############映射矩阵############################
+
     np.savez('calibration_maps.npz', map1x=map1x, map1y=map1y, map2x=map2x, map2y=map2y)
     
     # 校正图像
     rectified_left, rectified_right = rectify_images(left_img_path, right_img_path, map1x, map1y, map2x, map2y)
-    
-    # 保存和显示校正后的图像
-    cv2.imwrite("rectified_left.bmp", rectified_left)
-    cv2.imwrite("rectified_right.bmp", rectified_right)
+     # 找到特征点匹配并绘制连线
+    img_matches = find_and_draw_matches(rectified_left, rectified_right)
 
+    # 保存和显示校正后的图像
+    cv2.imwrite("testpic/rectified_left.png", rectified_left)
+    cv2.imwrite("testpic/rectified_right.png", rectified_right)
+    print("Q:",Q)
+    
     concat = cv2.hconcat([rectified_left, rectified_right])
 
     i = 0
     while (i < 2048):
         cv2.line(concat, (0,i), (4896,i), (0, 255, 0))
         i += 50
-    print("Q:",Q)
-    cv2.imwrite('rectified.bmp',concat)
-    cv2.imshow("rectified", concat)
+
+    cv2.imwrite('testpic/rectified.png',concat)
+    # cv2.imshow("rectified", concat)
+         # 显示匹配结果
+    cv2.namedWindow("Feature Matches",cv2.WINDOW_NORMAL)
+    cv2.imshow("Feature Matches", img_matches)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 

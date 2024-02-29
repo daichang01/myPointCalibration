@@ -12,7 +12,11 @@ def compute_disparity(img_left, img_right, num_disparities, block_size):
         block_size = 5
 
     # 初始化StereoSGBM对象
-    stereo = cv2.StereoSGBM_create(minDisparity=0, numDisparities=16 * num_disparities, blockSize=block_size)
+    stereo = cv2.StereoSGBM_create(
+        minDisparity=0, 
+        numDisparities=16 * num_disparities, 
+        blockSize=block_size
+        )
     # 计算视差
     disparity = stereo.compute(img_left, img_right)
     return disparity
@@ -54,8 +58,8 @@ def adjust_disparity_parameters(window_name, img_left, img_right):
 
 def main():
     # 加载校正后的左右图像
-    img_left = cv2.imread('rectified_left.bmp', 0)  
-    img_right = cv2.imread('rectified_right.bmp', 0)  
+    img_left = cv2.imread('testpic/rectified_left.png', 0)  
+    img_right = cv2.imread('testpic/rectified_right.png', 0)  
 
     # 调整视差参数并计算视差图
     adjust_disparity_parameters('SGBM', img_left, img_right)

@@ -13,7 +13,7 @@ def calibrate_camera(square_size, width, height, image_folder):
 
     # 读取图像文件
 
-    images = glob.glob(f'{image_folder}/*.bmp')
+    images = glob.glob(f'{image_folder}/*.png')
 
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
@@ -59,7 +59,7 @@ def main():
     # 棋盘格的大小为 (width, height)。
     square_size = 2.0
     width, height = 11, 8
-    image_folder = 'Hkvs_dataset/right'
+    image_folder = 'HKVSPNGdataset/right'
     calibration_data = calibrate_camera(square_size, width, height, image_folder)
 
 
